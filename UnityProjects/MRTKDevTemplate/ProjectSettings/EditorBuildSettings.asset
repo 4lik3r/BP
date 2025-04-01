@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/BP1.unity
     guid: cce32b3e86d440a4cacb0ac07df9a4cc
   - enabled: 1
+    path: Assets/BP1_version2.unity
+    guid: d60cd426b78cedf498972ff4c582e9e3
+  - enabled: 1
     path: Assets/BP2_movement2.unity
     guid: 1201a0abf7fea6c44822d0a33e6989ed
   - enabled: 1
