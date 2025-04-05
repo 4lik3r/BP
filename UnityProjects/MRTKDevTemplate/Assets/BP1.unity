@@ -2773,7 +2773,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8174955776655707806, guid: 72dfeb9ecf5ad884b87eff8bc5b49276, type: 3}
       propertyPath: <GazeDwellTime>k__BackingField
-      value: 0
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 8174955776655707806, guid: 72dfeb9ecf5ad884b87eff8bc5b49276, type: 3}
       propertyPath: isGazeHovered.onExited.m_PersistentCalls.m_Calls.Array.size
