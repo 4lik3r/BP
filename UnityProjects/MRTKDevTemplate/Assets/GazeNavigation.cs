@@ -8,7 +8,8 @@ public class GazeNavigation : MonoBehaviour
     public XRRayInteractor gazeInteractor;
     public NavMeshAgent wheelchairAgent;
     public float gazeHoldTime = 2f;
-    public float allowedAngleDifference = 0.5f; // ✅ How much the gaze can deviate (in degrees)
+    public float allowedAngleDifference = 0.5f; // How much the gaze can deviate (in degrees)
+    public GameObject markerPrefab;
     
     private Coroutine gazeCoroutine;
     private Vector3 targetPosition;
@@ -56,7 +57,7 @@ public class GazeNavigation : MonoBehaviour
 
                 if (lastGazeDirection == Vector3.zero)
                 {
-                    // ✅ First time setup
+                    // First time setup
                     lastGazeDirection = currentGazeDirection;
                     gazeTimer = 0f;
                 }
@@ -65,24 +66,24 @@ public class GazeNavigation : MonoBehaviour
 
                 if (angleDifference <= allowedAngleDifference)
                 {
-                    // ✅ Within allowed angle range, update gaze timer
+                    // Within allowed angle range, update gaze timer
                     gazeTimer += Time.deltaTime;
                     Debug.Log($"⏳ Holding gaze at the same spot... Time: {gazeTimer} - Angle Difference: {angleDifference}°");
 
-                    // ✅ Smoothly update the last gaze direction to allow minor adjustments
+                    // Smoothly update the last gaze direction to allow minor adjustments
                     lastGazeDirection = Vector3.Slerp(lastGazeDirection, currentGazeDirection, Time.deltaTime * 7f);
                 }
                 else
                 {
-                    // ✅ If the gaze moves too far, reset the timer
+                    // If the gaze moves too far, reset the timer
                     gazeTimer = 0f;
-                    lastGazeDirection = currentGazeDirection; // ✅ Allow user to start a new gaze focus
-                    Debug.Log($"❌ Gaze moved! Timer reset. Angle Difference: {angleDifference}°");
+                    lastGazeDirection = currentGazeDirection; 
+                    Debug.Log($"Gaze moved! Timer reset. Angle Difference: {angleDifference}°");
                 }
 
                 if (gazeTimer >= gazeHoldTime && gazeCoroutine == null)
                 {
-                    Debug.Log("✅ Gaze held for 2 seconds - Moving wheelchair!");
+                    Debug.Log("Gaze held for 2 seconds - Moving wheelchair!");
                     targetPosition = hit.point;
                     gazeCoroutine = StartCoroutine(MoveToTarget());
                 }
@@ -99,27 +100,36 @@ public class GazeNavigation : MonoBehaviour
     }
 
     private IEnumerator MoveToTarget()
+{
+    if (wheelchairAgent == null)
     {
-        if (wheelchairAgent == null)
-        {
-            Debug.LogError("Wheelchair NavMeshAgent is NULL! Assign it in the Inspector.");
-            yield break;
-        }
-
-        wheelchairAgent.isStopped = false;
-        wheelchairAgent.SetDestination(targetPosition);
-
-        while (Vector3.Distance(wheelchairAgent.transform.position, targetPosition) > wheelchairAgent.stoppingDistance + 0.2f)
-        {
-            yield return null;
-        }
-
-        Debug.Log("✅ Wheelchair has reached the destination.");
-        wheelchairAgent.isStopped = true;
-        wheelchairAgent.ResetPath();
-
-        gazeCoroutine = null;
+        Debug.LogError("Wheelchair NavMeshAgent is NULL! Assign it in the Inspector.");
+        yield break;
     }
+    if (markerPrefab != null)
+    {
+        GameObject marker = Instantiate(markerPrefab, targetPosition, Quaternion.identity);
+        Destroy(marker, 5f);
+    }
+    else
+    {
+        Debug.LogWarning("No markerPrefab assigned — nothing will spawn.");
+    }
+
+    wheelchairAgent.isStopped = false;
+    wheelchairAgent.SetDestination(targetPosition);
+
+    while (Vector3.Distance(wheelchairAgent.transform.position, targetPosition) > wheelchairAgent.stoppingDistance + 0.2f)
+    {
+        yield return null;
+    }
+
+    Debug.Log("Wheelchair has reached the destination.");
+    wheelchairAgent.isStopped = true;
+    wheelchairAgent.ResetPath();
+
+    gazeCoroutine = null;
+}
 
     private void ResetGaze()
     {
@@ -136,7 +146,7 @@ public class GazeNavigation : MonoBehaviour
     public void ToggleMovement()
     {
         movementEnabled = !movementEnabled;
-        Debug.Log(movementEnabled ? "✅ Movement Enabled" : "❌ Movement Disabled");
+        Debug.Log(movementEnabled ? "Movement Enabled" : "Movement Disabled");
 
         if (!movementEnabled)
         {
