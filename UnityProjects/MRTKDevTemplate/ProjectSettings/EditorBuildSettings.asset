@@ -6,17 +6,29 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/BP1.unity
-    guid: cce32b3e86d440a4cacb0ac07df9a4cc
+    path: Assets/easy_arrow_movement.unity
+    guid: b3617d81f2c98614dadfb4d0273d1170
   - enabled: 1
-    path: Assets/BP1_version2.unity
-    guid: d60cd426b78cedf498972ff4c582e9e3
+    path: Assets/easy_continual_arrow_movement.unity
+    guid: 717eca842522e48449e1b02980d782e3
   - enabled: 1
-    path: Assets/BP2_movement2.unity
-    guid: 1201a0abf7fea6c44822d0a33e6989ed
+    path: Assets/easy_third_person_movement.unity
+    guid: 2015d2beb9f274b4fb869e2362f595ea
   - enabled: 1
-    path: Assets/BP2_movement3.unity
-    guid: 7be1854860c635b47848785378f3ac78
+    path: Assets/easy_waypoint_movement.unity
+    guid: 8bee0752431356e439b3887b9a904c5a
+  - enabled: 1
+    path: Assets/hard_arrow_movement.unity
+    guid: 17f215c012f5c7247bdbffbc5565a9a6
+  - enabled: 1
+    path: Assets/hard_continual_arrow_movement.unity
+    guid: 8030ea8640fb82b41a0f12342485a04e
+  - enabled: 1
+    path: Assets/hard_third_person_movement.unity
+    guid: f6a9b2866ccc7e1408de4ecb36ea5991
+  - enabled: 1
+    path: Assets/hard_waypoint_movement.unity
+    guid: e0f6fd07ca668fe498744214df4ed559
   - enabled: 1
     path: Assets/PupilLabs/Scenes/PL_Calibration.unity
     guid: 94abf84c8b7d7ba46ab72ab69d768c6a
